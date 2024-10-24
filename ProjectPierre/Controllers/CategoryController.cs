@@ -27,7 +27,7 @@ namespace ProjectPierre.Controllers
                 return BadRequest(ModelState);
 
             var categories = await _categoryRepo.GetAllAsync();
-            var categoriesDTO = categories.Select(c => c.ToCategoryDTO());
+            var categoriesDTO = categories.Select(c => c.ToCategoriesListItemDTO());
 
             return Ok(categoriesDTO);
         }

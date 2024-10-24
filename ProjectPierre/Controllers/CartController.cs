@@ -59,7 +59,7 @@ namespace ProjectPierre.Controllers
         }
 
         [HttpPost("/addToCart/{cartId:int}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AddToCart([FromRoute] int cartId, List<AddCartItemDTO> addCartItemDTOs)
         {
             if (!ModelState.IsValid)

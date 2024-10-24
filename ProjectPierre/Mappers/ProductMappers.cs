@@ -1,7 +1,6 @@
-﻿using ProjectPierre.DTO.AisleDTOs;
+﻿using ProjectPierre.DTO.CategoryDTOs;
 using ProjectPierre.DTO.ProductDTOs;
 using ProjectPierre.Models;
-using System.Runtime.CompilerServices;
 
 namespace ProjectPierre.Mappers
 {
@@ -15,11 +14,27 @@ namespace ProjectPierre.Mappers
                 Label = product.Label,
                 Description = product.Description,
                 Price = product.Price,
-                Aisles = product.Aisles.Select(a => new AisleDTO
+                //Aisles = product.Aisles.Select(a => new AisleDTO
+                //{
+                //    ProductId = a.ProductId,
+                //    CategoryId = a.CategoryId,
+                //}).ToList()
+                Categories = product.Aisles.Select(a => new CategoriesListItemDTO
                 {
-                    ProductId = a.ProductId,
-                    CategoryId = a.CategoryId,
+                    Id = a.CategoryId,
+                    Name = a.Category.Name
                 }).ToList()
+            };
+        }
+
+        public static ProductFetchDTO ToProductFetchDTO(this Product product)
+        {
+            return new ProductFetchDTO
+            {
+                Id = product.Id,
+                Label = product.Label,
+                Description = product.Description,
+                Price = product.Price,
             };
         }
 

@@ -20,6 +20,15 @@ namespace ProjectPierre.Mappers
             };
         }
 
+        public static CategoriesListItemDTO ToCategoriesListItemDTO(this Category category)
+        {
+            return new CategoriesListItemDTO
+            {
+                Id = category.Id,
+                Name = category.Name,
+            };
+        }
+
         public static Category ToCategoryFromAddCategoryDTO(this AddCategoryDTO addCategoryDTO) {
             return new Category
             {

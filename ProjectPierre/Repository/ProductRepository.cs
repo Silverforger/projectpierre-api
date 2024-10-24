@@ -21,7 +21,7 @@ namespace ProjectPierre.Repository
 
         public async Task<List<Product>> GetAllAsync(QueryObject query)
         {
-            var products = _context.Products.Include(p => p.Aisles).AsQueryable();
+            var products = _context.Products.Include(p => p.Aisles).ThenInclude(a => a.Category).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(query.Filter))
             {
@@ -41,6 +41,11 @@ namespace ProjectPierre.Repository
                 }
             }
 
+            if (query.CategoryId != null)
+            {
+                products = products.Where(p => p.Aisles.Where(a => a.CategoryId == query.CategoryId).Any());
+            }
+
             var pageSkip = (query.PageNumber -1) * query.PageSize;
 
             return await products.Skip(pageSkip).Take(query.PageSize).ToListAsync();
@@ -48,7 +53,7 @@ namespace ProjectPierre.Repository
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await _context.Products.Include(p => p.Aisles).FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products.Include(p => p.Aisles).ThenInclude(a => a.Category).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Product> CreateAsync(CreateProductDTO createProductDTO)

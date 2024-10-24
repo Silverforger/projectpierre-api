@@ -18,7 +18,7 @@ namespace ProjectPierre.Repository
 
         public async Task<Cart?> GetByCartIdAsync(int cartId)
         {
-            var cart = await _context.Carts.Include(c => c.CartItems).ThenInclude(c => c.Product).ThenInclude(p => p.Aisles).FirstOrDefaultAsync(u => u.Id == cartId);
+            var cart = await _context.Carts.Include(c => c.CartItems).ThenInclude(c => c.Product).ThenInclude(p => p.Aisles).ThenInclude(a => a.Category).FirstOrDefaultAsync(u => u.Id == cartId);
 
             if (cart == null)
             {
@@ -30,7 +30,7 @@ namespace ProjectPierre.Repository
 
         public async Task<Cart?> GetByUserIdAsync(string cartUserId)
         {
-            var cart = await _context.Carts.Include(c => c.CartItems).ThenInclude(c => c.Product).FirstOrDefaultAsync(u => u.CartUserId == cartUserId);
+            var cart = await _context.Carts.Include(c => c.CartItems).ThenInclude(c => c.Product).ThenInclude(p => p.Aisles).ThenInclude(a => a.Category).FirstOrDefaultAsync(u => u.CartUserId == cartUserId);
 
             if (cart == null)
             {

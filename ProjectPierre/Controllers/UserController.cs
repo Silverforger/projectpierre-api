@@ -57,8 +57,7 @@ namespace ProjectPierre.Controllers
                             new NewUserDTO
                             {
                                 UserName = user.UserName,
-                                Email = user.Email,
-                                Token = _tokenService.CreateToken(user)
+                                Email = user.Email
                             }
                         );
                     }
@@ -100,7 +99,8 @@ namespace ProjectPierre.Controllers
             Response.Cookies.Append("refreshToken", refreshToken.Token, new CookieOptions
             {
                 HttpOnly = true,
-                Expires = refreshToken.Expires
+                Expires = refreshToken.Expires,
+                SameSite = SameSiteMode.None
             });
 
             user.RefreshToken = refreshToken.Token;
@@ -112,7 +112,7 @@ namespace ProjectPierre.Controllers
             return Ok(user.ToLoggedInUserDTOFromUser(token));
         }
 
-        [HttpPost("refresh")]
+        [HttpGet("refresh")]
         public async Task<IActionResult> Refresh()
         {
             var requestRefreshToken = Request.Cookies["refreshToken"];

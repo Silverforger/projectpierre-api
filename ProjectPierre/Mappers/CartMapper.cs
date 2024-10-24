@@ -1,6 +1,7 @@
 ﻿using ProjectPierre.DTO.AisleDTOs;
 using ProjectPierre.DTO.CartDTOs;
 using ProjectPierre.DTO.CartItemDTOs;
+using ProjectPierre.DTO.CategoryDTOs;
 using ProjectPierre.DTO.ProductDTOs;
 using ProjectPierre.Models;
 
@@ -24,10 +25,15 @@ namespace ProjectPierre.Mappers
                         Label = c.Product.Label,
                         Description = c.Product.Description,
                         Price = c.Product.Price,
-                        Aisles = c.Product.Aisles.Select(a => new AisleDTO
+                        //Aisles = c.Product.Aisles.Select(a => new AisleDTO
+                        //{
+                        //    ProductId = a.ProductId,
+                        //    CategoryId = a.CategoryId,
+                        //}).ToList()
+                        Categories = c.Product.Aisles.Select(a => new CategoriesListItemDTO
                         {
-                            ProductId = a.ProductId,
-                            CategoryId = a.CategoryId,
+                            Id = a.CategoryId,
+                            Name = a.Category.Name
                         }).ToList()
                     }
                 }).ToList()

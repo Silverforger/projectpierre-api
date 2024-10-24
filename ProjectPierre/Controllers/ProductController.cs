@@ -8,7 +8,7 @@ using ProjectPierre.Mappers;
 
 namespace ProjectPierre.Controllers
 {
-    [Route("api/product")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
