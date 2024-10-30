@@ -114,6 +114,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.WithOrigins("http://localhost:3001").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.WithOrigins("http://localhost:3002").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.WithOrigins("http://localhost:3003").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.WithOrigins("http://localhost:3004").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+
+    builder.WithOrigins("https://mf-parent.onrender.com").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.WithOrigins("https://mf-productlist.onrender.com").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
