@@ -10,7 +10,7 @@ using ProjectPierre.Services;
 
 namespace ProjectPierre.Controllers
 {
-    [Route("api/user")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -100,7 +100,8 @@ namespace ProjectPierre.Controllers
             {
                 HttpOnly = true,
                 Expires = refreshToken.Expires,
-                SameSite = SameSiteMode.None
+                SameSite = SameSiteMode.None,
+                Secure = true
             });
 
             user.RefreshToken = refreshToken.Token;

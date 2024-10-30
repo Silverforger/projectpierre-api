@@ -9,6 +9,7 @@ namespace ProjectPierre.Mappers
         {
             return new LoggedInUserDTO
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Token = token
