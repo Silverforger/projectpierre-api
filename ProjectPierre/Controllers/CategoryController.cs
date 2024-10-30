@@ -6,7 +6,7 @@ using ProjectPierre.Mappers;
 
 namespace ProjectPierre.Controllers
 {
-    [Route("api/category")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoryController : ControllerBase
 
