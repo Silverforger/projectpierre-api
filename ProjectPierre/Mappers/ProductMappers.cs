@@ -14,16 +14,22 @@ namespace ProjectPierre.Mappers
                 Label = product.Label,
                 Description = product.Description,
                 Price = product.Price,
-                //Aisles = product.Aisles.Select(a => new AisleDTO
-                //{
-                //    ProductId = a.ProductId,
-                //    CategoryId = a.CategoryId,
-                //}).ToList()
                 Categories = product.Aisles.Select(a => new CategoriesListItemDTO
                 {
                     Id = a.CategoryId,
                     Name = a.Category.Name
                 }).ToList()
+            };
+        }
+
+        public static ProductCartItemDTO ToProductCartItemDTO(this Product product)
+        {
+            return new ProductCartItemDTO
+            {
+                Id = product.Id,
+                Label = product.Label,
+                Description = product.Description,
+                Price = product.Price
             };
         }
 
