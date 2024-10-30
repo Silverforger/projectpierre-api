@@ -6,7 +6,7 @@ namespace ProjectPierre.Interfaces
     public interface ICartItemRepository
     {
         Task<CartItem?> GetByIdAsync(int cartItemId);
-        Task<List<CartItem>> AddAsync(int cartId, List<AddCartItemDTO> cartItems);
+        Task<CartItem> AddAsync(int cartId, AddCartItemDTO addCartItemDTO);
         Task<CartItem?> UpdateAsync(int cartItemId, UpdateCartItemDTO updateCartItemDTO);
         Task<CartItem?> DeleteAsync(int cartItemId);
     }

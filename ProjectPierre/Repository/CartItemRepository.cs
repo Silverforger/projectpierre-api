@@ -28,11 +28,11 @@ namespace ProjectPierre.Repository
             return cartItem;
         }
 
-        public async Task<List<CartItem>> AddAsync(int cartId, List<AddCartItemDTO> addCartItemDTOs)
+        public async Task<CartItem> AddAsync(int cartId, AddCartItemDTO addCartItemDTO)
         {
-            var cartItemsModel = addCartItemDTOs.Select(c => c.ToCartItemFromAddCartItemDTO(cartId)).ToList();
+            var cartItemsModel = addCartItemDTO.ToCartItemFromAddCartItemDTO(cartId);
 
-            await _context.CartItems.AddRangeAsync(cartItemsModel);
+            await _context.CartItems.AddAsync(cartItemsModel);
             await _context.SaveChangesAsync();
 
             return cartItemsModel;

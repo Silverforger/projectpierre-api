@@ -13,7 +13,7 @@ namespace ProjectPierre.Mappers
                 Id = cartItem.Id,
                 Count = cartItem.Count,
                 ProductId = cartItem.ProductId,
-                Product = cartItem.Product.ToProductDTO(),
+                Product = cartItem.Product.ToProductCartItemDTO(),
                 CartId = cartItem.CartId,
             };
         }

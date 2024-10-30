@@ -7,7 +7,7 @@ using ProjectPierre.Services;
 
 namespace ProjectPierre.Controllers
 {
-    [Route("api/cartitem")]
+    [Route("api/cartitems")]
     [ApiController]
     public class CartItemController : Controller
     {
