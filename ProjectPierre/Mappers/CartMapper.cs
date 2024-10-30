@@ -19,23 +19,19 @@ namespace ProjectPierre.Mappers
                     Id = c.Id,
                     Count = c.Count,
                     ProductId = c.ProductId,
-                    Product = new ProductDTO
+                    Product = new ProductCartItemDTO
                     {
                         Id = c.Product.Id,
                         Label = c.Product.Label,
                         Description = c.Product.Description,
                         Price = c.Product.Price,
-                        //Aisles = c.Product.Aisles.Select(a => new AisleDTO
+                        //Categories = c.Product.Aisles.Select(a => new CategoriesListItemDTO
                         //{
-                        //    ProductId = a.ProductId,
-                        //    CategoryId = a.CategoryId,
+                        //    Id = a.CategoryId,
+                        //    Name = a.Category.Name
                         //}).ToList()
-                        Categories = c.Product.Aisles.Select(a => new CategoriesListItemDTO
-                        {
-                            Id = a.CategoryId,
-                            Name = a.Category.Name
-                        }).ToList()
-                    }
+                    },
+                    CartId = cart.Id
                 }).ToList()
             };
         }

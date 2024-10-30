@@ -9,7 +9,7 @@ using ProjectPierre.Models;
 
 namespace ProjectPierre.Controllers
 {
-    [Route("api/cart")]
+    [Route("api/carts")]
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -26,7 +26,8 @@ namespace ProjectPierre.Controllers
             _cartItemRepo = cartItemRepo;
         }
 
-        [HttpGet("/cartUserId/{cartUserId}")]
+        //[Authorize]
+        [HttpGet("cartUserId/{cartUserId}")]
         public async Task<IActionResult> GetCartByUserId([FromRoute] string cartUserId)
         {
             if (!ModelState.IsValid)
@@ -42,7 +43,8 @@ namespace ProjectPierre.Controllers
             return Ok(cart.ToCartDTO());
         }
 
-        [HttpGet("/cartId/{cartId:int}")]
+        //[Authorize]
+        [HttpGet("cartId/{cartId:int}")]
         public async Task<IActionResult> GetCartByCartId([FromRoute] int cartId)
         {
             if (!ModelState.IsValid)
@@ -58,9 +60,9 @@ namespace ProjectPierre.Controllers
             return Ok(cart.ToCartDTO());
         }
 
-        [HttpPost("/addToCart/{cartId:int}")]
+        [HttpPost("addToCart/{cartId:int}")]
         //[Authorize]
-        public async Task<IActionResult> AddToCart([FromRoute] int cartId, List<AddCartItemDTO> addCartItemDTOs)
+        public async Task<IActionResult> AddToCart([FromRoute] int cartId, AddCartItemDTO addCartItemDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -70,16 +72,20 @@ namespace ProjectPierre.Controllers
                 return BadRequest($"There is no cart associated with the specified cart Id of {cartId}.");
             }
 
-            foreach (var product in addCartItemDTOs)
+            if (!await _productRepo.IsValidProductId(addCartItemDTO.ProductId))
             {
-                if (!await _productRepo.IsValidProductId(product.ProductId))
-                {
-                    return BadRequest($"There is no product associated with the specified ID of {product.ProductId}.");
-                }
+                return BadRequest($"There is no product associated with the specified ID of {addCartItemDTO.ProductId}.");
             }
 
-            var cartItems = await _cartItemRepo.AddAsync(cartId, addCartItemDTOs);
             var cart = await _cartRepo.GetByCartIdAsync(cartId);
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == addCartItemDTO.ProductId, null);
+            if (cartItem == null)
+            {
+                await _cartItemRepo.AddAsync(cartId, addCartItemDTO);
+            } else
+            {
+                await _cartItemRepo.UpdateAsync(cartItem.Id, new UpdateCartItemDTO { Count = addCartItemDTO.Count });
+            }
 
             return Ok(cart.ToCartDTO());
         }
