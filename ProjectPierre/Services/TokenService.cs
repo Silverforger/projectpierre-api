@@ -31,7 +31,7 @@ namespace ProjectPierre.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(3),
+                Expires = DateTime.Now.AddMinutes(1),
                 SigningCredentials = credentials,
                 Issuer = _config["JWT:Issuer"],
                 Audience = _config["JWT:Audience"]
@@ -49,7 +49,7 @@ namespace ProjectPierre.Services
             var refreshToken = new RefreshToken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.Now.AddMinutes(15)
+                Expires = DateTime.Now.AddMinutes(2)
             };
 
             return refreshToken;

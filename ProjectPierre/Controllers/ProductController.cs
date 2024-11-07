@@ -25,8 +25,8 @@ namespace ProjectPierre.Controllers
             _categoryRepo = categoryRepo;
         }
 
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> GetAllProducts([FromQuery] QueryObject query)
         {
             var products = await _productRepo.GetAllAsync(query);
@@ -35,6 +35,7 @@ namespace ProjectPierre.Controllers
             return Ok(productsDTO);
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {

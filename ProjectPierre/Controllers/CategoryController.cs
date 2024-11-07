@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjectPierre.Data;
 using ProjectPierre.DTO.CategoryDTOs;
 using ProjectPierre.Interfaces;
@@ -20,6 +21,7 @@ namespace ProjectPierre.Controllers
             _categoryRepo = categoryRepo; 
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -32,6 +34,7 @@ namespace ProjectPierre.Controllers
             return Ok(categoriesDTO);
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetCategoryById([FromRoute] int id)
         {

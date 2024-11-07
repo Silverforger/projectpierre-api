@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectPierre.Data;
+using ProjectPierre.Extensions;
 using ProjectPierre.Interfaces;
 using ProjectPierre.Models;
 using ProjectPierre.Repository;
@@ -49,7 +50,10 @@ builder.Services.AddSwaggerGen(option =>
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+    options.UseSqlServer("Server=projectpierreserver,1433;Initial Catalog=ProjectPierreDb;User ID=SA;Password=P@ssw0rd!;TrustServerCertificate=true;MultiSubnetFailover=True;");
 });
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -103,7 +107,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+// AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -111,6 +115,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ApplyMigrations();
 
 app.UseHttpsRedirection();
 

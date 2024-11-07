@@ -1,0 +1,17 @@
+# version: '3.4'
+
+services:
+  projectpierreserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+  projectpierreapi:
+    build:
+      context: .
+      dockerfile: ProjectPierre/Dockerfile
+    ports:
+      - "8080:8080"

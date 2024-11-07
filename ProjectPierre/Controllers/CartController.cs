@@ -26,7 +26,7 @@ namespace ProjectPierre.Controllers
             _cartItemRepo = cartItemRepo;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("cartUserId/{cartUserId}")]
         public async Task<IActionResult> GetCartByUserId([FromRoute] string cartUserId)
         {
@@ -43,7 +43,7 @@ namespace ProjectPierre.Controllers
             return Ok(cart.ToCartDTO());
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("cartId/{cartId:int}")]
         public async Task<IActionResult> GetCartByCartId([FromRoute] int cartId)
         {
@@ -60,8 +60,8 @@ namespace ProjectPierre.Controllers
             return Ok(cart.ToCartDTO());
         }
 
+        [Authorize]
         [HttpPost("addToCart/{cartId:int}")]
-        //[Authorize]
         public async Task<IActionResult> AddToCart([FromRoute] int cartId, AddCartItemDTO addCartItemDTO)
         {
             if (!ModelState.IsValid)
